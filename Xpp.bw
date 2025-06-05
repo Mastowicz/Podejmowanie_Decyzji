@@ -1,0 +1,110 @@
+knowledge base nazwa
+
+
+facets
+
+    single yes;
+
+    problem:
+        val oneof { "Nie pod³¹czony kabel",
+                    "Nie w³¹czony zasilacz",
+                    "Problem z pamiêci¹ RAM",
+                    "Problem z dyskiem twardym",
+                    "Problem z uk³adem BIOS",
+                    "Problem z front panelem",
+                    "Wszystko git"};
+
+    przycisk:
+        query "[BCzy jest reakcja na przycisk power?:"
+        val oneof { "tak","nie"};
+        
+    ekran:
+        query "[BCzy coœ wyœwietla siê na ekranie?:"
+        val oneof { "tak","nie"};
+        
+    systemu:
+        query "[BCzy system operacyjny siê w³¹cza?:"
+        val oneof { "tak","nie"};
+        
+    boot:
+        query "[BCzy zawiesza siê przy w³¹czaniu?:"
+        val oneof { "tak","nie"};
+        
+    pr¹d:
+        query "[BCzy zasilacz jest pod³¹czony do pr¹du?:"
+        val oneof { "tak","nie"};
+
+    prze³¹cznik:
+        query "[BCzy zasilanie jest w³¹czony?:"
+        val oneof { "tak","nie"};
+
+end;
+
+rules
+
+    problem = "Nie pod³¹czony kabel" if
+        przycisk = "nie",
+        pr¹d = "nie";
+
+    problem = "Nie w³¹czony zasilacz" if
+        przycisk = "nie",
+        pr¹d = "tak",
+        prze³¹cznik = "nie";
+
+    problem = "Problem z pamiêci¹ RAM" if
+        przycisk = "tak",
+        ekran = "nie";
+
+    problem = "Problem z dyskiem twardym" if
+        przycisk = "tak",
+        ekran = "tak",
+        systemu = "nie",
+        boot = "nie";
+
+    problem = "Problem z uk³adem BIOS" if
+        przycisk = "tak",
+        ekran = "tak",
+        systemu = "nie",
+        boot = "tak";
+
+    problem = "Problem z front panelem" if
+        przycisk = "nie",
+        pr¹d = "tak",
+        prze³¹cznik = "tak";
+
+    problem = "Wszystko git" if
+        przycisk = "tak",
+        ekran = "tak",
+        systemu = "tak";
+
+end;
+
+control
+
+    setSysText( problem, "[2Co jest nie tak z komputerem?" );
+
+    run;
+
+    setAppWinTitle("Diagnostyka");
+    createAppWindow;
+    vignette( "Diagnostyka komputera","Autorzy:\nPatryk Wilk\nKrystian Zaj¹c","Projekt na przedmiot sztuczna iteligencja");
+
+    int Odp;
+    Odp:=1;
+
+    menu "Menu"
+    1. "Diagnostyka problemu"
+    2. "wyjœcie"
+    case 1:
+        while(Odp == 1)
+            begin
+                goal( "problem = X" );
+                confirmBox( 0, 0, "Kontynuacja","Czy problem nadal wystêpuje?", Odp );
+                delNewFacts;
+            end;
+    case 2:
+        exit;
+
+    end;
+end;
+end;
