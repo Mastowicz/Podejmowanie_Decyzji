@@ -22,14 +22,17 @@ Program pomoże użytkownikowi znaleźć przyczynę przez którą komputer nie d
 
 Wykorzystane w projekcie informacje na temat diagnostyki komputerów pochodzą z własnych doświadczeń oraz wiedzy nabytej na zajęciach.
 
+Umiejętność tworzenia baz wiedzy w programie PC-Shell nabyto z dokumentacji i przykładów dostarczonych razem z programem.
+
 ## 4. Proces powstawania
 
 1) Wybór tematyki projektu
 2) Ustalenie założeń
-3) Utworzenie drzewa decyzyjnego
-4) Zapoznanie się z programem PC-Shell
-5) Analiza przykładowych baz wiedzy
-6) Opracowanie kodu źródłowego
+3) Opracowanie bazy reguł
+4) Utworzenie drzewa decyzyjnego
+5) Zapoznanie się z programem PC-Shell
+6) Analiza przykładowych baz wiedzy
+7) Opracowanie kodu źródłowego
 
 ### Baza reguł
 
@@ -37,7 +40,7 @@ Reguła 1:
 ```
 Jeśli reakcja_na_przycisk_power = "nie"
 i     kabel_zasilania_jest_podłączony = "nie"
-to    problem = "Nie podłączony kabel zasilania"
+to    problem = "Niepodłączony kabel zasilania"
 ```
 
 Reguła 2:
@@ -45,7 +48,7 @@ Reguła 2:
 Jeśli reakcja_na_przycisk_power = "nie"
 i     kabel_zasilania_jest_podłączony = "tak"
 i     przełącznik_na_zasilaczu_jest_włączony = "nie"
-to    problem = "Nie włączony zasilacz"
+to    problem = "Niewłączony zasilacz"
 ```
 
 Reguła 3:
@@ -103,8 +106,8 @@ knowledge base pc_troubleshooting
         single yes;
     
         problem:
-            val oneof { "Nie podłączony kabel zasilania",
-                        "Nie włączony zasilacz",
+            val oneof { "Niepodłączony kabel zasilania",
+                        "Niewłączony zasilacz",
                         "Prawdopodobnie problem z pamięcią RAM",
                         "Problem z dyskiem twardym",
                         "Problem z układem BIOS",
@@ -206,4 +209,46 @@ knowledge base pc_troubleshooting
     end;
 end;
 ```
+## 6. Przykłady wnioskowania
 
+### Konsultacja 1
+> System: Czy jest reakcja na przycisk power?
+> 
+> Użytkownik: Tak
+> 
+> System: Czy coś wyświetla się na ekranie?
+> 
+> Użytkownik: Tak
+> System: Czy system operacyjny się włącza?
+> 
+> Użytkownik: Nie
+> System: Czy komputer zawiesza się przy włączaniu?
+> 
+> Użytkownik: Nie
+> 
+> System: Problem z dyskiem twardym
+
+### Konsultacja 2
+> System: Czy jest reakcja na przycisk power?
+> 
+> Użytkownik: Nie
+> 
+> System: Czy komputer jest podłączony do prądu?
+> 
+> Użytkownik: Tak
+> 
+> System: Czy zasilacz jest włączony?
+> 
+> Użytkownik: Dlaczego?
+> 
+> System: Hipoteza: Problem z front panelem lub wyłączony zasilacz
+> 
+> System: Czy zasilacz jest włączony?
+> 
+> Użytkownik: Tak
+> 
+> System: Problem z front panelem
+> 
+> Użytkownik: Jak?
+> 
+> System: Reguła 3
