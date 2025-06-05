@@ -97,7 +97,8 @@ to    problem = "Nie wykryto problemu"
 ![diagram](https://github.com/Mastowicz/Podejmowanie_Decyzji/blob/main/diagram.svg)
 
 ## 5. Kod źródłowy
-
+<details>
+    
 ```
 knowledge base pc_troubleshooting
 
@@ -209,6 +210,9 @@ knowledge base pc_troubleshooting
     end;
 end;
 ```
+
+</details>
+
 ## 6. Przykłady wnioskowania
 
 ### Konsultacja 1
