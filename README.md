@@ -223,9 +223,11 @@ end;
 > System: Czy coś wyświetla się na ekranie?
 > 
 > Użytkownik: Tak
+> 
 > System: Czy system operacyjny się włącza?
 > 
 > Użytkownik: Nie
+> 
 > System: Czy komputer zawiesza się przy włączaniu?
 > 
 > Użytkownik: Nie
