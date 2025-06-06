@@ -100,7 +100,7 @@ to    problem = "Nie wykryto problemu"
 <details>
     
 ```
-knowledge base pc_troubleshooting
+knowledge base diagnozapc                            
 
     facets
     
@@ -115,11 +115,11 @@ knowledge base pc_troubleshooting
                         "Problem z front panelem",
                         "Nie wykryto problemu"};
     
-        przycisk:
+        reakcja_na_przycisk_power:
             query "[BCzy jest reakcja na przycisk power?:"
             val oneof { "tak","nie"};
             
-        ekran:
+        ekran_wyswietla:
             query "[BCzy coś wyświetla się na ekranie?:"
             val oneof { "tak","nie"};
             
@@ -131,11 +131,11 @@ knowledge base pc_troubleshooting
             query "[BCzy komputer zawiesza się przy włączaniu?:"
             val oneof { "tak","nie"};
             
-        prąd:
+        kabel_zasilania_jest_podłączony:
             query "[BCzy komputer jest podłączony do prądu?:"
             val oneof { "tak","nie"};
     
-        przełącznik:
+        przełącznik_na_zasilaczu_jest_włączony:
             query "[BCzy zsilacz jest włączony?:"
             val oneof { "tak","nie"};
     
@@ -143,39 +143,39 @@ knowledge base pc_troubleshooting
     
     rules
     
-        problem = "Nie podłączony kabel zasilania" if
-            przycisk = "nie",
-            prąd = "nie";
+        01:problem = "Niepodłączony kabel zasilania" if
+            reakcja_na_przycisk_power = "nie",
+            kabel_zasilania_jest_podłączony = "nie";
     
-        problem = "Nie włączony zasilacz" if
-            przycisk = "nie",
-            prąd = "tak",
-            przełącznik = "nie";
+        02:problem = "Niewłączony zasilacz" if
+            reakcja_na_przycisk_power = "nie",
+            kabel_zasilania_jest_podłączony = "tak",
+            przełącznik_na_zasilaczu_jest_włączony = "nie";
+            
+        03:problem = "Problem z front panelem" if
+            reakcja_na_przycisk_power = "nie",
+            kabel_zasilania_jest_podłączony = "tak",
+            przełącznik_na_zasilaczu_jest_włączony = "tak";
     
-        problem = "Prawdopodobnie problem z pamięcią RAM" if
-            przycisk = "tak",
-            ekran = "nie";
+        04:problem = "Prawdopodobnie problem z pamięcią RAM" if
+            reakcja_na_przycisk_power = "tak",
+            ekran_wyswietla = "nie";
     
-        problem = "Problem z dyskiem twardym" if
-            przycisk = "tak",
-            ekran = "tak",
+        05:problem = "Problem z układem BIOS" if
+            reakcja_na_przycisk_power = "tak",
+            ekran_wyswietla = "tak",
+            system_dziala = "nie",
+            boot_error = "tak";
+            
+        06:problem = "Problem z dyskiem twardym" if
+            reakcja_na_przycisk_power = "tak",
+            ekran_wyswietla = "tak",
             system_dziala = "nie",
             boot_error = "nie";
     
-        problem = "Problem z układem BIOS" if
-            przycisk = "tak",
-            ekran = "tak",
-            system_dziala = "nie",
-            boot_error = "tak";
-    
-        problem = "Problem z front panelem" if
-            przycisk = "nie",
-            prąd = "tak",
-            przełącznik = "tak";
-    
-        problem = "Nie wykryto problemu" if
-            przycisk = "tak",
-            ekran = "tak",
+        07:problem = "Nie wykryto problemu" if
+            reakcja_na_przycisk_power = "tak",
+            ekran_wyswietla = "tak",
             system_dziala = "tak";
     
     end;
