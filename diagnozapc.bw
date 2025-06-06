@@ -1,0 +1,109 @@
+knowledge base diagnozapc                            
+
+    facets
+    
+        single yes;
+    
+        problem:
+            val oneof { "Niepod³¹czony kabel zasilania",
+                        "Niew³¹czony zasilacz",
+                        "Prawdopodobnie problem z pamiêci¹ RAM",
+                        "Problem z dyskiem twardym",
+                        "Problem z uk³adem BIOS",
+                        "Problem z front panelem",
+                        "Nie wykryto problemu"};
+    
+        reakcja_na_przycisk_power:
+            query "[BCzy jest reakcja na przycisk power?:"
+            val oneof { "tak","nie"};
+            
+        ekran_wyswietla:
+            query "[BCzy coœ wyœwietla siê na ekranie?:"
+            val oneof { "tak","nie"};
+            
+        system_dziala:
+            query "[BCzy system operacyjny siê w³¹cza?:"
+            val oneof { "tak","nie"};
+            
+        boot_error:
+            query "[BCzy komputer zawiesza siê przy w³¹czaniu?:"
+            val oneof { "tak","nie"};
+            
+        kabel_zasilania_jest_pod³¹czony:
+            query "[BCzy komputer jest pod³¹czony do pr¹du?:"
+            val oneof { "tak","nie"};
+    
+        prze³¹cznik_na_zasilaczu_jest_w³¹czony:
+            query "[BCzy zsilacz jest w³¹czony?:"
+            val oneof { "tak","nie"};
+    
+    end;
+    
+    rules
+    
+        01:problem = "Niepod³¹czony kabel zasilania" if
+            reakcja_na_przycisk_power = "nie",
+            kabel_zasilania_jest_pod³¹czony = "nie";
+    
+        02:problem = "Niew³¹czony zasilacz" if
+            reakcja_na_przycisk_power = "nie",
+            kabel_zasilania_jest_pod³¹czony = "tak",
+            prze³¹cznik_na_zasilaczu_jest_w³¹czony = "nie";
+            
+        03:problem = "Problem z front panelem" if
+            reakcja_na_przycisk_power = "nie",
+            kabel_zasilania_jest_pod³¹czony = "tak",
+            prze³¹cznik_na_zasilaczu_jest_w³¹czony = "tak";
+    
+        04:problem = "Prawdopodobnie problem z pamiêci¹ RAM" if
+            reakcja_na_przycisk_power = "tak",
+            ekran_wyswietla = "nie";
+    
+        05:problem = "Problem z uk³adem BIOS" if
+            reakcja_na_przycisk_power = "tak",
+            ekran_wyswietla = "tak",
+            system_dziala = "nie",
+            boot_error = "tak";
+            
+        06:problem = "Problem z dyskiem twardym" if
+            reakcja_na_przycisk_power = "tak",
+            ekran_wyswietla = "tak",
+            system_dziala = "nie",
+            boot_error = "nie";
+    
+        07:problem = "Nie wykryto problemu" if
+            reakcja_na_przycisk_power = "tak",
+            ekran_wyswietla = "tak",
+            system_dziala = "tak";
+    
+    end;
+    
+    control
+    
+        setSysText( problem, "[2Co jest nie tak z komputerem?" );
+    
+        run;
+    
+        setAppWinTitle("Diagnostyka");
+        createAppWindow;
+        vignette( "Diagnostyka komputera","Autorzy:\nPatryk Wilk\nKrystian Zaj¹c","Projekt na przedmiot: sztuczna inteligencja");
+    
+        int Odp;
+        Odp:=1;
+    
+        menu "Menu"
+        1. "Diagnostyka problemu"
+        2. "Wyjœcie"
+        case 1:
+            while(Odp == 1)
+                begin
+                    goal( "problem = X" );
+                    confirmBox( 0, 0, "Kontynuacja","Wybierz \"OK\" aby kontynuowaæ diagnostykê\nlub wybierz \"Anuluj\" aby zakoñczyæ", Odp );
+                    delNewFacts;
+                end;
+        case 2:
+            exit;
+    
+        end;
+    end;
+end;
