@@ -26,15 +26,12 @@ Umiejętność tworzenia baz wiedzy w programie PC-Shell nabyto z dokumentacji i
 
 ## 4. Proces powstawania
 
-1) Wybór tematyki projektu
-2) Ustalenie założeń
-3) Opracowanie bazy reguł
-4) Utworzenie drzewa decyzyjnego
-5) Zapoznanie się z programem PC-Shell
-6) Analiza przykładowych baz wiedzy
-7) Opracowanie kodu źródłowego
-
-### Baza reguł
+#### 1. Wybór tematyki projektu  
+Wybierając temat projektu należało znaleźć problem, który można rozwiązać na różne sposoby bazując na jednym zestawie pytań. Diagnozując komputer często przechodzi się przez ten sam proces sprawdzania najbardziej oczywistych usterek, dlatego wybrany został problem niedziałającego komputera i znalezienia tego przyczyny.
+#### 2. Ustalenie założeń  
+Temat diagnostyki komputerów jest bardzo rozległy. Często objawy nie wskazują jednoznacznie na konkretną usterkę i wymagana jest dalsza diagnoza. Dlatego na potrzeby zrealizowania projektu w określonym czasie, zestaw rozwiązań problemu został ograniczony do najpowszechniejszych i najbardziej oczywistych opcji.
+#### 3. Opracowanie bazy reguł  
+Mając ustalone założenia i znając możliwe do zdiagnozowania dla programu usterki należało określić zestaw warunków dla których te usterki występują. Dobierając warunki staraliśmy się pamiętać o tym aby były one łatwe do sprawdzenia dla przeciętnego użytkownika.
 
 Reguła 1:
 ```
@@ -91,10 +88,15 @@ i     ekran_wyświetla = "tak"
 i     system_działa = "tak"
 to    problem = "Nie wykryto problemu"
 ```
-
-### Drzewo decyzyjne
+#### 4. Utworzenie drzewa decyzyjnego  
+W celu utworzenia diagramu wystarczyło ułożyć pytania sprawdzające występowanie ustalonych wcześniej warunków, ustalić sensowną kolejniość, a następnie przedstawić całość graficznie. Do stworzenia ostatecznej wersji diagramu użyte zostało przeglądarkowe oprogramowanie "draw.io".
 
 ![diagram](https://github.com/Mastowicz/Podejmowanie_Decyzji/blob/main/diagram.svg)
+
+#### 5. Zapoznanie się z programem PC-Shell  
+...
+#### 6. Analiza przykładowych baz wiedzy  
+#### 7. Opracowanie kodu źródłowego  
 
 ## 5. Kod źródłowy
 <details>
